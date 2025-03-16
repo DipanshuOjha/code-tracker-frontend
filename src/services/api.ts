@@ -2,6 +2,7 @@ import axios from 'axios';
 import type { User, Submission, ApiService } from '../types';
 
 const CF_API_URL = 'https://codeforces.com/api';
+const BACKEND_URL = 'http://localhost:3000/api';
 
 // Rate limiting
 let lastRequestTime = 0;
@@ -130,5 +131,27 @@ export const api: ApiService = {
     }
     
     return result;
+  },
+
+  logVisit: async (action: 'SEARCH' | 'COMPARE', handles: string[], path: string) => {
+    try {
+      await axios.post(`${BACKEND_URL}/visitors/log`, {
+        action,
+        handles,
+        path
+      });
+    } catch (error) {
+      console.error('Failed to log visit:', error);
+    }
+  },
+
+  getVisitorStats: async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/visitors/stats`);
+      return response.data;
+    } catch (error) {
+      console.error('Failed to get visitor stats:', error);
+      throw error;
+    }
   }
 }; 

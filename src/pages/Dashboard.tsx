@@ -404,7 +404,9 @@ const Dashboard = () => {
               <div className="flex justify-between items-center">
                 <span className="text-gray-600">Last Contest</span>
                 <span className="text-xl font-bold text-gray-600">
-                  {user.lastOnlineTimeSeconds ? new Date(user.lastOnlineTimeSeconds * 1000).toLocaleDateString() : 'N/A'}
+                  {contestRatingHistory.length > 0 
+                    ? new Date(contestRatingHistory[contestRatingHistory.length - 1].ratingUpdateTimeSeconds * 1000).toLocaleDateString() 
+                    : 'No contests yet'}
                 </span>
               </div>
             </div>

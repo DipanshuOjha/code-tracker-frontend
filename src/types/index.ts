@@ -83,4 +83,14 @@ export interface ApiService {
   getRatingHistory: (handle: string) => Promise<RatingChange[]>;
   getUsers: (handles: string[]) => Promise<User[]>;
   getUsersSubmissions: (handles: string[]) => Promise<{ [key: string]: Submission[] }>;
+  logVisit: (action: 'SEARCH' | 'COMPARE', handles: string[], path: string) => Promise<void>;
+  getVisitorStats: () => Promise<{
+    totalVisits: number;
+    dailyVisits: number;
+    weeklyVisits: number;
+    monthlyVisits: number;
+    uniqueVisitors: number;
+    topSearchedHandles: Array<{ _id: string; count: number }>;
+    topComparedHandles: Array<{ _id: string; count: number }>;
+  }>;
 }

@@ -18,10 +18,12 @@ const UserInput = () => {
     }
     try {
       await api.getUser(handle.trim());
+      await api.logVisit('SEARCH', [handle.trim()], '/dashboard');
       setUserHandle(handle.trim());
       navigate('/dashboard');
     } catch (err: any) {
-      alert(`User '${handle.trim()}' not found on Codeforces`);
+      const errorMessage = err.response?.data?.comment || `User '${handle.trim()}' not found on Codeforces`;
+      alert(errorMessage);
       setError('User not found');
     }
   };

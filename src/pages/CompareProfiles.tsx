@@ -204,6 +204,7 @@ const CompareProfiles: React.FC = () => {
         );
         
         console.log('Both users exist, proceeding with data fetch');
+        await api.logVisit('COMPARE', [handle1, handle2], '/compare');
         
         const comparison = [];
         
@@ -361,6 +362,14 @@ const CompareProfiles: React.FC = () => {
                 <div className="p-4 bg-gray-50 rounded">
                   <p className="text-sm text-gray-600">Avg. Problems/Day (45d)</p>
                   <p className="text-xl font-bold">{data.stats.recentAverage}</p>
+                </div>
+                <div className="p-4 bg-gray-50 rounded">
+                  <p className="text-sm text-gray-600">Last Contest</p>
+                  <p className="text-xl font-bold">
+                    {data.ratingHistory.length > 0 
+                      ? new Date(data.ratingHistory[data.ratingHistory.length - 1].ratingUpdateTimeSeconds * 1000).toLocaleDateString()
+                      : 'No contests yet'}
+                  </p>
                 </div>
               </div>
             </div>
