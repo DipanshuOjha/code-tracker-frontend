@@ -136,9 +136,12 @@ export const api: ApiService = {
   logVisit: async (action: 'SEARCH' | 'COMPARE', handles: string[], path: string) => {
     try {
       await axios.post(`${BACKEND_URL}/visitors/log`, {
+        ipAddress: "::1", 
         action,
         handles,
-        path
+        userAgent: navigator.userAgent,  // Get User-Agent dynamically
+        path,
+        timestamp: new Date().toISOString()
       },
         {
           headers: {
