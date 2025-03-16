@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userHandleState } from '../state/atoms';
 import { api } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   BarChart, Bar, PieChart, Pie, Cell,
@@ -94,6 +95,7 @@ interface DifficultyAccumulator {
 
 const Dashboard = () => {
   const userHandle = useRecoilValue(userHandleState);
+  const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [contestRatingHistory, setContestRatingHistory] = useState<RatingChange[]>([]);
@@ -101,13 +103,12 @@ const Dashboard = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!userHandle) {
-        setError('No user handle provided');
-        setLoading(false);
-        return;
-      }
+    if (!userHandle) {
+      navigate('/');
+      return;
+    }
 
+    const fetchData = async () => {
       try {
         setLoading(true);
         setError(null);
@@ -128,7 +129,7 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [userHandle]);
+  }, [userHandle, navigate]);
 
   if (loading) {
     return <div className="flex justify-center items-center min-h-screen">Loading...</div>;

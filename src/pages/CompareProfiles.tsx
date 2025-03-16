@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import { userHandleState } from '../state/atoms';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer, LineChart, Line, ReferenceArea
@@ -65,11 +67,18 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 const CompareProfiles: React.FC = () => {
+  const currentUserHandle = useRecoilValue(userHandleState);
   const [handle1, setHandle1] = useState('');
   const [handle2, setHandle2] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
+
+  useEffect(() => {
+    if (currentUserHandle && !handle1) {
+      setHandle1(currentUserHandle);
+    }
+  }, [currentUserHandle]);
 
   const calculateStats = (submissions: Submission[], ratingHistory: RatingChange[]) => {
     // Get successful submissions only
