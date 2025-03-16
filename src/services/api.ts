@@ -139,7 +139,13 @@ export const api: ApiService = {
         action,
         handles,
         path
-      });
+      },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
     } catch (error) {
       console.error('Failed to log visit:', error);
     }
