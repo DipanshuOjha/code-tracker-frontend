@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { User, Submission, ApiService } from '../types';
 
 const CF_API_URL = 'https://codeforces.com/api';
-const BACKEND_URL = 'http://localhost:3000/api';
+const BACKEND_URL = 'https://code-tracker-backend.vercel.app';
 
 // Rate limiting
 let lastRequestTime = 0;
